@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim - Roborenk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #001220; /* Yedek arka plan rengi */
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Su altı arka planı */
+        .bg-underwater {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: url('img/sualtı\ \(2\).jpg') no-repeat center center/cover;
+        }
+
+        /* Arka planı hafif koyulaştıran ve mavi ton katan katman */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, rgba(0, 15, 30, 0.7), rgba(0, 40, 80, 0.6));
+        }
+
+        /* Cam (Glassmorphism) Efekti */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-input {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .glass-input:focus {
+            background: rgba(0, 0, 0, 0.4);
+            border-color: #00d2ff;
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Su Baloncukları Animasyonu */
+        .bubble {
+            position: fixed;
+            bottom: -20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            z-index: -1;
+            animation: rise infinite ease-in;
+        }
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+          /* Logo Colors */
+        .c-red { color: #ff3b30; }
+        .c-orange { color: #ff9500; }
+        .c-blue { color: #007aff; }
+        .c-green { color: #34c759; }
+        .c-purple { color: #af52de; }
+
+    </style>
+</head>
+
+  <div class="fixed bottom-8 right-8 z-[99] flex flex-col items-end">
+        
+        <!-- Açılır Seçenekler Kutusu (Varsayılan olarak gizli) -->
+        <div id="wp-popup" class="hidden mb-3 glass-panel p-4 rounded-2xl shadow-2xl flex flex-col space-y-2 w-56 border border-white/20">
+            <p class="text-xs font-bold text-cyan-300 pb-1 border-b border-white/10 text-center">Görüşmek İstediğiniz Kişi:</p>
+            
+            <!-- Özge Aşık WhatsApp -->
+            <a href="https://wa.me/90 554 382 02 62?text=Merhaba%20Özge%20Hanım,%20Roborenk%20etkinlikleri%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" 
+               class="flex items-center space-x-2 p-2 rounded-lg bg-white/5 hover:bg-white/15 transition text-xs font-semibold text-white">
+                <i class="fab fa-whatsapp text-[#25D366] text-base"></i>
+                <span>Etkinlik Kordinatörü - Özge AŞIK</span>
+            </a>
+
+            <!-- Çağlar Bardak WhatsApp -->
+            <a href="https://wa.me/905543820262?text=Merhaba%20Çağlar%20Bey,%20Roborenk%20etkinlikleri%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" 
+               class="flex items-center space-x-2 p-2 rounded-lg bg-white/5 hover:bg-white/15 transition text-xs font-semibold text-white">
+                <i class="fab fa-whatsapp text-[#25D366] text-base"></i>
+                <span>Çağlar BARDAK</span>
+            </a>
+        </div>
+
+        <!-- Ana WhatsApp Butonu -->
+        <button onclick="document.getElementById('wp-popup').classList.toggle('hidden')" 
+           class="bg-[#25D366] text-white w-16 h-16 rounded-full flex items-center justify-center text-4xl shadow-[0_4px_15px_rgba(37,211,102,0.4)] hover:bg-[#20b858] hover:scale-110 transition-all duration-300 focus:outline-none">
+            <i class="fab fa-whatsapp"></i>
+        </button>
+    </div>
+<body class="antialiased">
+
+    <!-- Arka Planlar -->
+    <div class="bg-underwater"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Yükselen Baloncuklar -->
+    <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-duration: 8s;"></div>
+    <div class="bubble" style="left: 30%; width: 15px; height: 15px; animation-duration: 6s; animation-delay: 2s;"></div>
+    <div class="bubble" style="left: 70%; width: 25px; height: 25px; animation-duration: 10s; animation-delay: 1s;"></div>
+    <div class="bubble" style="left: 85%; width: 10px; height: 10px; animation-duration: 5s; animation-delay: 3s;"></div>
+
+    <!-- Sabit Üst Menü (Fixed Navbar) -->
+<header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 xl:px-16 flex flex-wrap justify-between items-center glass border-b border-white/20 shadow-2xl">
+        <a href="main.html" class="text-3xl font-extrabold tracking-tight flex items-center bg-white/5 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition">
+            <span class="text-red-500">r</span><span class="text-orange-400">o</span><span class="text-blue-400">b</span><span class="text-green-400">o</span><span class="text-purple-400">r</span><span class="text-red-400">e</span><span class="text-amber-400">n</span><span class="text-cyan-400">k</span>
+        </a>
+        
+        <!-- Masaüstü Navigasyon (İletişim Aktif) -->
+        <nav class="hidden lg:flex space-x-8 items-center text-sm font-semibold tracking-wide">
+            <a href="main.html" class="hover:text-cyan-300 transition pb-1">Anasayfa</a>
+            <a href="hakkimizda.html" class="hover:text-cyan-300 transition pb-1">Hakkımızda</a>
+            <a href="iletisim.html" class="text-cyan-300 border-b-2 border-cyan-300 pb-1">İletişim</a>
+        </nav>
+
+        <button id="menu-btn" class="lg:hidden text-white text-2xl focus:outline-none bg-white/10 p-2 rounded-xl border border-white/10">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div id="mobile-menu" class="hidden w-full lg:hidden flex flex-col space-y-4 pt-4 pb-2 border-t border-white/10 mt-4 text-center font-semibold">
+            <a href="main.html" class="hover:text-cyan-300 transition py-2">Anasayfa</a>
+            <a href="hakkimizda.html" class="hover:text-cyan-300 transition py-2">Hakkımızda</a>
+            <a href="iletisim.html" class="text-cyan-300 py-2">İletişim</a>
+        </div>
+    </header>
+    <!-- Mobil Menünün Açılıp Kapanması İçin Ufak Bir JavaScript -->
+    <script>
+        const btn = document.getElementById('menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+    <!-- İletişim İçeriği -->
+    <main class="flex-grow pt-32 pb-16 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+        <div class="max-w-6xl w-full glass-panel rounded-3xl p-8 md:p-12">
+            
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4 drop-shadow-lg">
+                    Bizimle İletişime Geçin
+                </h1>
+                <p class="text-lg text-blue-100 max-w-2xl mx-auto">
+                    Okulunuzda veya etkinliğinizde unutulmaz bir su altı macerası ve teknoloji deneyimi yaşatmak için bize ulaşın. Ekibimiz sizinle en kısa sürede iletişime geçecektir.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                
+                <!-- Sol Taraf: İletişim Bilgileri -->
+                <div class="flex flex-col justify-center space-y-8">
+                    
+                    <!-- İletişim Kartı 1: Özge Aşık -->
+                    <div class="flex items-center space-x-5 p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition duration-300">
+                        <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/30">
+                            <i class="fas fa-headset text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Özge Aşık</h3>
+                            <p class="text-blue-200 text-sm mb-1">Etkinlik Koordinatörü & İletişim</p>
+                            <a href="tel:+905543820262" class="text-cyan-400 font-semibold hover:text-cyan-300 transition">+90 554 382 02 62</a>
+                        </div>
+                    </div>
+
+                    <!-- İletişim Kartı 2: Çağlar Bardak -->
+                    <div class="flex items-center space-x-5 p-6 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition duration-300">
+                        <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                            <i class="fas fa-user-tie text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Çağlar Bardak</h3>
+                            <p class="text-blue-200 text-sm mb-1">Operasyon & İletişim</p>
+                            <a href="tel:+905398123519" class="text-cyan-400 font-semibold hover:text-cyan-300 transition">+90 539 812 35 19</a>
+                        </div>
+                    </div>
+
+                    <!-- Sosyal Medya & Ekstra -->
+                    <div class="pt-4 border-t border-white/20">
+                        <h4 class="text-lg font-semibold mb-4 text-white">Bizi Takip Edin</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 hover:text-cyan-400 transition"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sağ Taraf: İletişim Formu -->
+                <div class="bg-black/20 p-8 rounded-2xl border border-white/10 shadow-2xl">
+                    <!-- Sağ Taraf: İletişim Formu (FormSubmit Entegreli) -->
+                <div class="bg-black/20 p-8 rounded-2xl border border-white/10 shadow-2xl">
+                    <form action="https://formsubmit.co/ozgeasik89@gmail.com" method="POST" class="space-y-6">
+                        
+                        <!-- FormSubmit Ek Ayarları (İsteğe Bağlı ama Önemli) -->
+                        <!-- 1. Gönderim sonrası yönlendirilecek sayfa (İsterseniz tebrikler sayfası yapabilirsiniz, şimdilik aynı sayfada kalır) -->
+                        <input type="hidden" name="_next" value="https://sitenizinadresi.com/iletisim.html">
+                        <!-- 2. E-posta konusunu özelleştirme -->
+                        <input type="hidden" name="_subject" value="Roborenk Web Sitesinden Yeni Etkinlik Talebi!">
+                        <!-- 3. Captcha (robot doğrulama) ekranını atlayıp direkt maile düşmesi için -->
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-blue-200 mb-1">Adınız Soyadınız</label>
+                            <input type="text" id="name" name="Ad Soyad" class="w-full px-4 py-3 rounded-lg glass-input" placeholder="Örn: Ahmet Yılmaz" required>
+                        </div>
+                        <div>
+                            <label for="school" class="block text-sm font-medium text-blue-200 mb-1">Okul / Kurum Adı</label>
+                            <input type="text" id="school" name="Okul Adi" class="w-full px-4 py-3 rounded-lg glass-input" placeholder="Örn: Atatürk İlkokulu">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-blue-200 mb-1">Telefon Numaranız</label>
+                            <input type="tel" id="phone" name="Telefon" class="w-full px-4 py-3 rounded-lg glass-input" placeholder="05XX XXX XX XX" required>
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-blue-200 mb-1">Mesajınız / Etkinlik Talebiniz</label>
+                            <textarea id="message" name="Mesaj" rows="4" class="w-full px-4 py-3 rounded-lg glass-input resize-none" placeholder="Hangi atölyelerimizle ilgileniyorsunuz? Öğrenci sayınız nedir?" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg shadow-cyan-500/30 transform hover:-translate-y-1">
+                            Mesajı Gönder <i class="fas fa-paper-plane ml-2"></i>
+                        </button>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="relative z-20 w-full glass-panel border-t border-white/15 mt-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+            
+            <!-- Sol Kolon: Logo ve Kısa Bilgi -->
+            <div>
+               <a href="main.html" class="text-3xl font-extrabold tracking-tight flex items-center bg-white/5 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition">
+            <span class="c-red">r</span>
+            <span class="c-orange">o</span>
+            <span class="c-blue">b</span>
+            <span class="c-green">o</span>
+            <span class="c-purple">r</span>
+            <span class="c-red">e</span>
+            <span class="c-orange">n</span>
+            <span class="c-blue">k</span>
+        </a>
+                <p class="text-sm text-gray-300 max-w-sm mx-auto md:mx-0">
+                    Eğlenceyi ve teknolojiyi okullara taşıyan gezici su altı ve VR macera atölyesi.
+                </p>
+            </div>
+
+            <!-- Orta Kolon: Hızlı Linkler -->
+            <div class="flex flex-col space-y-2">
+                <h4 class="text-cyan-400 font-semibold mb-1">Hızlı Erişim</h4>
+                <a href="main.html" class="text-sm text-gray-300 hover:text-white transition">Anasayfa</a>
+                <a href="hakkimizda.html" class="text-sm text-gray-300 hover:text-white transition">Hakkımızda</a>
+                <a href="iletisim.html" class="text-sm text-gray-300 hover:text-white transition">İletişim</a>
+            </div>
+
+            <!-- Sağ Kolon: İletişim / Sorumlu -->
+            <div class="flex flex-col space-y-2">
+                <h4 class="text-cyan-400 font-semibold mb-1">İletişim Bilgileri</h4>
+                <p class="text-sm text-gray-300">Özge Aşık</p>
+                <a href="tel:+905398123519" class="text-sm text-cyan-300 font-semibold hover:underline">+90 554 382 02 62</a>
+                <p class="text-sm text-gray-300">Çağlar Bardak</p>
+                <a href="tel:+905398123519" class="text-sm text-cyan-300 font-semibold hover:underline">+90 539 812 35 19</a>
+                <div class="flex justify-center md:justify-start space-x-4 pt-2">
+                    <a href="https://www.instagram.com/roborenk/" target="_blank" class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 text-sm transition"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Telif Hakkı Çizgisi -->
+        <div class="max-w-7xl mx-auto mt-8 pt-6 border-t border-white/10 text-center text-xs text-gray-400">
+            &copy; 2026 Roborenk. Tüm hakları saklıdır. Eğlen, Keşfet, Öğren!
+        </div>
+    </footer>
